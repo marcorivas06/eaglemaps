@@ -1,18 +1,21 @@
 body {
-  display: flex;
-  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.app {
-  height: 800px;
-  width: 100vh;
-  /* justify-content: center; */
-}
-
-.map {
-  height: 100%;
+.map-wrapper {
+  height: 600px;
   width: 100%;
 }
+
+.map-wrapper .map {
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
 
 .marker {
   background-image: url('https://static.wixstatic.com/media/e07fd7_556e6e8cefe5268a9ecae2b59b75a91f.png/v1/fit/w_2500,h_1330,al_c/e07fd7_556e6e8cefe5268a9ecae2b59b75a91f.png');
