@@ -14,7 +14,7 @@ const Header = () => {
   
   return (
 	  <div className="header">
-      {/* <Search/> */}
+      <Search/>
       {/* <button onClick={populate}>Populate</button> */}
     </div>
   )

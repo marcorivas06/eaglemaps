@@ -3,6 +3,7 @@ import './App.css';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import useMap from './hooks/useMap';
 import Header from './components/Header/Header';
+import Footer from './components/Header/Footer/Footer';
 
 const App = () => {
 	const { map, mapElement } = useMap();
@@ -24,6 +25,7 @@ const App = () => {
 					<div ref={mapElement} className="map" />
 				</div>
 			)}
+			<Footer />
 		</>
 	);
 };
