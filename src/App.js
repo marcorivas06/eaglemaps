@@ -4,7 +4,6 @@ import * as ttapi from "@tomtom-international/web-sdk-services";
 import "./App.css";
 import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import { api } from "./api";
-import { createMarker } from "./createMarker";
 
 /* 
 Pending: 
@@ -39,10 +38,6 @@ const App = () => {
   useEffect(() => {
     api().then(({ data }) => {
       setPlaces(data);
-
-      for (let i = 0; i < places.length; i++) {
-        console.log(places[i].name);
-      }
     });
   }, []);
 
@@ -89,6 +84,41 @@ const App = () => {
       lng: longitude,
       lat: latitude,
     };
+
+    const createMarker = (position) => {
+      const markerElement = document.createElement("div");
+      markerElement.className = "marker";
+      const color = "#5327c3";
+      const popupText = "popupText";
+
+      const markerContentElement = document.createElement("div");
+      markerContentElement.className = "marker-content";
+      markerContentElement.style.backgroundColor = color;
+      markerElement.appendChild(markerContentElement);
+
+      const iconElement = document.createElement("div");
+      iconElement.className = "marker-icon";
+      const url =
+        "(https://www.google.com/url?sa=i&url=https%3A%2F%2Fbranditechture.agency%2Fbrand-logos%2Fdownload%2Femory-eagles%2F&psig=AOvVaw3UODvi9nt6vyr4gv0MzPfV&ust=1670260195290000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLCu9p664PsCFQAAAAAdAAAAABAF)";
+      iconElement.style.backgroundImage = url;
+      markerContentElement.appendChild(iconElement);
+
+      const popup = new tt.Popup({ offset: 30 }).setText(popupText);
+      // add marker to map
+      new tt.Marker({ element: markerElement, anchor: "bottom" })
+        .setLngLat(position)
+        .setPopup(popup)
+        .addTo(map);
+    };
+    const populate = () => {
+      for (let i = 0; i < places.length; i++) {
+        const lat = places[i].coords.lat;
+        const lng = places[i].coords.lng;
+        const position = [lng, lat];
+        createMarker(position);
+      }
+    };
+
     const destinations = [];
 
     let map = tt.map({
@@ -131,8 +161,6 @@ const App = () => {
       marker.setPopup(popup).togglePopup();
     };
     addMarker();
-
-    const populate = () => {};
 
     const sortDestinations = (locations) => {
       const pointsForDestinations = locations.map((destination) => {
@@ -188,8 +216,8 @@ const App = () => {
     map.on("click", (e) => {
       destinations.push(e.lngLat);
       addDeliveryMarker(e.lngLat, map);
-      recalculateRoutes();
-      // rotateCamera(3);
+      recalculateRoutes([]);
+      populate();
     });
 
     return () => map.remove();
