@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const api = async () => {
-  const result = await axios.get("http://localhost:3000");
-  //   const { data } = result;
-  return result;
+export const fetchPlaces = async () => {
+	const result = await axios.get('http://localhost:3000');
+
+	return result;
 };
